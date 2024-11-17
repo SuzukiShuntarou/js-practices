@@ -23,13 +23,14 @@ let generateCalendarDates = (options) => {
 };
 
 let showCalendar = (year, month, firstDate, lastDay) => {
+  const SATURDAY = 6;
   console.log(` ${month}月 ${year}年\n 日 月 火 水 木 金 土`);
   process.stdout.write("   ".repeat(firstDate.getDay()));
 
   Array.from(Array(lastDay).keys(), (x) => x + 1).forEach((date) => {
     const showedDate = date.toString().padStart(3, " ");
 
-    if (new Date(year, month - 1, date).getDay() != 6) {
+    if (new Date(year, month - 1, date).getDay() != SATURDAY) {
       process.stdout.write(showedDate);
     } else {
       console.log(showedDate);
