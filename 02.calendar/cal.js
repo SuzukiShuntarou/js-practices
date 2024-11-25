@@ -25,7 +25,8 @@ const generateCalendarDates = (options) => {
 
 const showCalendar = (year, month, firstDate, lastDay) => {
   const SATURDAY = 6;
-  console.log(" ".repeat(6) + `${month}月 ${year}\n日 月 火 水 木 金 土`);
+  console.log(`${" ".repeat(6)}${month}月 ${year}`);
+  console.log("日 月 火 水 木 金 土");
   process.stdout.write("   ".repeat(firstDate.getDay()));
 
   Array.from(Array(lastDay).keys(), (x) => x + 1).forEach((date) => {
