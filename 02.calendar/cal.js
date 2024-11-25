@@ -15,8 +15,8 @@ const main = () => {
 
 const generateCalendarDates = (options) => {
   const today = new Date();
-  const year = options["year"] || today.getFullYear();
-  const month = options["month"] || today.getMonth() + 1;
+  const year = options["year"] ?? today.getFullYear();
+  const month = options["month"] ?? today.getMonth() + 1;
   const firstDate = new Date(year, month - 1, 1);
   const lastDay = new Date(year, month, 0).getDate();
 
