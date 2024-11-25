@@ -9,7 +9,8 @@ let main = () => {
     year: args.y,
     month: args.m,
   };
-  generateCalendarDates(options);
+  const [year, month, firstDate, lastDay] = generateCalendarDates(options);
+  showCalendar(year, month, firstDate, lastDay);
 };
 
 let generateCalendarDates = (options) => {
@@ -19,7 +20,7 @@ let generateCalendarDates = (options) => {
   const firstDate = new Date(year, month - 1, 1);
   const lastDay = new Date(year, month, 0).getDate();
 
-  showCalendar(year, month, firstDate, lastDay);
+  return [year, month, firstDate, lastDay];
 };
 
 let showCalendar = (year, month, firstDate, lastDay) => {
