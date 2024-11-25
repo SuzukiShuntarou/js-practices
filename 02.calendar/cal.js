@@ -29,12 +29,12 @@ let showCalendar = (year, month, firstDate, lastDay) => {
   process.stdout.write("   ".repeat(firstDate.getDay()));
 
   Array.from(Array(lastDay).keys(), (x) => x + 1).forEach((date) => {
-    const showedDate = date.toString().padStart(2, " ");
+    const formattedDate = date.toString().padStart(2, " ");
 
     if (new Date(year, month - 1, date).getDay() != SATURDAY) {
-      process.stdout.write(`${showedDate} `);
+      process.stdout.write(`${formattedDate} `);
     } else {
-      console.log(showedDate);
+      console.log(formattedDate);
     }
   });
   console.log();
