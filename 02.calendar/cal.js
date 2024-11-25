@@ -33,7 +33,10 @@ const showCalendar = (year, month, firstDate, lastDay) => {
     const formattedDate = date.toString().padStart(2, " ");
 
     if (new Date(year, month - 1, date).getDay() != SATURDAY) {
-      process.stdout.write(`${formattedDate} `);
+      process.stdout.write(formattedDate);
+      if (date < lastDay) {
+        process.stdout.write(" ");
+      }
     } else {
       console.log(formattedDate);
     }
