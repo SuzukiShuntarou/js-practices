@@ -9,8 +9,8 @@ const main = () => {
     year: args.y,
     month: args.m,
   };
-  const [year, month] = generateCalendarYearMonth(calendarOptions);
-  showCalendar(year, month);
+  const yearmonthOptions = generateCalendarYearMonth(calendarOptions);
+  showCalendar(yearmonthOptions);
 };
 
 const generateCalendarYearMonth = (calendarOptions) => {
@@ -18,10 +18,12 @@ const generateCalendarYearMonth = (calendarOptions) => {
   const year = calendarOptions.year ?? today.getFullYear();
   const month = calendarOptions.month ?? today.getMonth() + 1;
 
-  return [year, month];
+  return { year, month };
 };
 
-const showCalendar = (year, month) => {
+const showCalendar = (yearmonthOptions) => {
+  const year = yearmonthOptions.year;
+  const month = yearmonthOptions.month;
   const firstDate = new Date(year, month - 1, 1);
   const lastDate = new Date(year, month, 0);
 
