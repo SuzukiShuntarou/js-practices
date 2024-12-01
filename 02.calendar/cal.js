@@ -37,13 +37,11 @@ const showCalendar = (year, month) => {
   ) {
     const formattedDate = currentDate.getDate().toString().padStart(2, " ");
 
+    process.stdout.write(formattedDate);
     if (currentDate.getDay() == SATURDAY) {
-      console.log(formattedDate);
-    } else {
-      process.stdout.write(formattedDate);
-      if (currentDate < lastDate) {
-        process.stdout.write(" ");
-      }
+      console.log(" ");
+    } else if (currentDate < lastDate) {
+      process.stdout.write(" ");
     }
   }
   console.log();
