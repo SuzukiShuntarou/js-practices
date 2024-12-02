@@ -5,25 +5,17 @@ import minimist from "minimist";
 const main = () => {
   const args = minimist(process.argv.slice(2));
 
-  const calendarOptions = {
-    year: args.y,
-    month: args.m,
-  };
-  const yearmonthOptions = generateCalendarYearMonth(calendarOptions);
-  showCalendar(yearmonthOptions);
-};
-
-const generateCalendarYearMonth = (calendarOptions) => {
   const today = new Date();
-  const year = calendarOptions.year ?? today.getFullYear();
-  const month = calendarOptions.month ?? today.getMonth() + 1;
-
-  return { year, month };
+  const calendarOptions = {
+    year: args.y ?? today.getFullYear(),
+    month: args.m ?? today.getMonth() + 1,
+  };
+  showCalendar(calendarOptions);
 };
 
-const showCalendar = (yearmonthOptions) => {
-  const year = yearmonthOptions.year;
-  const month = yearmonthOptions.month;
+const showCalendar = (calendarOptions) => {
+  const year = calendarOptions.year;
+  const month = calendarOptions.month;
   const firstDate = new Date(year, month - 1, 1);
   const lastDate = new Date(year, month, 0);
 
