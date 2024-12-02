@@ -14,8 +14,7 @@ const main = () => {
 };
 
 const showCalendar = (calendarOptions) => {
-  const year = calendarOptions.year;
-  const month = calendarOptions.month;
+  const { year, month } = calendarOptions;
   const firstDate = new Date(year, month - 1, 1);
   const lastDate = new Date(year, month, 0);
 
