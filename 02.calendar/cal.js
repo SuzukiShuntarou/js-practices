@@ -13,8 +13,7 @@ const main = () => {
   showCalendar(calendarOptions);
 };
 
-const showCalendar = (calendarOptions) => {
-  const { year, month } = calendarOptions;
+const showCalendar = ({ year, month }) => {
   const firstDate = new Date(year, month - 1, 1);
   const lastDate = new Date(year, month, 0);
 
