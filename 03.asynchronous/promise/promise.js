@@ -51,13 +51,13 @@ const createBooksTableWithError = () => {
       );
     })
     .catch((error) => {
-      console.log(error.message);
+      console.error(error.message);
     })
     .then(() => {
       return allDatabasePromise("SELECT * FROM book");
     })
     .catch((error) => {
-      console.log(error.message);
+      console.error(error.message);
     })
     .then(() => {
       runDatabasePromise("DROP TABLE books");

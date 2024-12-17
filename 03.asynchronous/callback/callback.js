@@ -40,11 +40,11 @@ const createBooksTableWithError = () => {
         "JavaScript Primer",
         (error) => {
           if (error) {
-            console.log(error.message);
+            console.error(error.message);
           }
           db.all("SELECT * FROM book", (error) => {
             if (error) {
-              console.log(error.message);
+              console.error(error.message);
             }
             db.run("DROP TABLE books", () => {
               db.close();

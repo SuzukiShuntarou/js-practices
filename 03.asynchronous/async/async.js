@@ -31,7 +31,7 @@ await timers.setTimeout(100);
 
 const handleSqliteError = (error) => {
   if (error instanceof Error && error.code?.startsWith("SQLITE_")) {
-    console.log(error.message);
+    console.error(error.message);
   } else {
     throw error;
   }
