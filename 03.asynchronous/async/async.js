@@ -17,11 +17,10 @@ const createBooksTableWithoutError = async () => {
     "INSERT INTO books (title) VALUES (?)",
     "JavaScript Primer",
   );
-  const insertedId = result.lastID;
-  console.log(insertedId);
+  console.log(result.lastID);
   const record = await getDatabasePromise(
     "SELECT title FROM books WHERE id = ?",
-    insertedId,
+    result.lastID,
   );
   console.log(record);
   await runDatabasePromise("DROP TABLE books");

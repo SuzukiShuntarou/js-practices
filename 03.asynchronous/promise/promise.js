@@ -20,9 +20,8 @@ const createBooksTableWithoutError = () => {
       );
     })
     .then((result) => {
-      const insertedId = result.lastID;
-      console.log(insertedId);
-      return insertedId;
+      console.log(result.lastID);
+      return result.lastID;
     })
     .then((insertedId) => {
       return getDatabasePromise(

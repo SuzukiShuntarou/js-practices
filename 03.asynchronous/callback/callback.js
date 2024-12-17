@@ -13,11 +13,10 @@ const createBooksTableWithoutError = () => {
         "INSERT INTO books (title) VALUES (?)",
         "JavaScript Primer",
         function () {
-          const insertedId = this.lastID;
-          console.log(insertedId);
+          console.log(this.lastID);
           db.get(
             "SELECT title FROM books WHERE id = ?",
-            insertedId,
+            this.lastID,
             (_, record) => {
               console.log(record);
               db.run("DROP TABLE books");
