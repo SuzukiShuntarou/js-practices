@@ -41,28 +41,29 @@ mainWithoutError();
 
 await timers.setTimeout(100);
 
-const createBooksTableWithError = () => {
-  db.run(
-    "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
-    () => {
-      db.run(
-        "INSERT INTO books (titlr) VALUES (?)",
-        "JavaScript Primer",
-        (error) => {
-          if (error) {
-            console.error(error.message);
-          }
-          db.all("SELECT * FROM book", (error) => {
-            if (error) {
-              console.error(error.message);
-            }
-            db.run("DROP TABLE books", () => {
-              db.close();
-            });
-          });
-        },
-      );
-    },
-  );
+const insertBookTitleWithError = (title, callback) => {
+  db.run("INSERT INTO books (titlr) VALUES (?)", title, (error) => {
+    callback(error);
+  });
 };
-createBooksTableWithError();
+
+const searchBooksTableWithError = (callback) => {
+  db.all("SELECT * FROM book", (error) => {
+    callback(error);
+  });
+};
+
+const mainWithError = () => {
+  createBooksTable(() => {
+    insertBookTitleWithError("JavaScript Primer", (error) => {
+      console.error(error.message);
+      searchBooksTableWithError((error) => {
+        console.error(error.message);
+        db.run("DROP TABLE books", () => {
+          db.close();
+        });
+      });
+    });
+  });
+};
+mainWithError();
