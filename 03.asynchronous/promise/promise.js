@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import timers from "timers/promises";
-
+import sqlite3 from "sqlite3";
 import {
   runSqlQueryPromise,
   getDatabasePromise,
@@ -9,12 +9,16 @@ import {
   closeDatabasePromise,
 } from "./promisification-functions.js";
 
+const db = new sqlite3.Database(":memory:");
+
 const createBooksTableWithoutError = () => {
   runSqlQueryPromise(
+    db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   )
     .then(() => {
       return runSqlQueryPromise(
+        db,
         "INSERT INTO books (title) VALUES (?)",
         "JavaScript Primer",
       );
@@ -25,6 +29,7 @@ const createBooksTableWithoutError = () => {
     })
     .then((insertedId) => {
       return getDatabasePromise(
+        db,
         "SELECT title FROM books WHERE id = ?",
         insertedId,
       );
@@ -33,7 +38,7 @@ const createBooksTableWithoutError = () => {
       console.log(record);
     })
     .finally(() => {
-      runSqlQueryPromise("DROP TABLE books");
+      runSqlQueryPromise(db, "DROP TABLE books");
     });
 };
 createBooksTableWithoutError();
@@ -42,10 +47,12 @@ await timers.setTimeout(100);
 
 const createBooksTableWithError = () => {
   runSqlQueryPromise(
+    db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   )
     .then(() => {
       return runSqlQueryPromise(
+        db,
         "INSERT INTO books (titlr) VALUES (?)",
         "JavaScript Primer",
       );
@@ -54,16 +61,16 @@ const createBooksTableWithError = () => {
       console.error(error.message);
     })
     .then(() => {
-      return allDatabasePromise("SELECT * FROM book");
+      return allDatabasePromise(db, "SELECT * FROM book");
     })
     .catch((error) => {
       console.error(error.message);
     })
     .then(() => {
-      runSqlQueryPromise("DROP TABLE books");
+      runSqlQueryPromise(db, "DROP TABLE books");
     })
     .finally(() => {
-      closeDatabasePromise();
+      closeDatabasePromise(db);
     });
 };
 createBooksTableWithError();

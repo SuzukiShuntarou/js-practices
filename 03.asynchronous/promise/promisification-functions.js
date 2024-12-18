@@ -1,10 +1,6 @@
-import sqlite3 from "sqlite3";
-
-const db = new sqlite3.Database(":memory:");
-
-export function runSqlQueryPromise(query, param) {
+export function runSqlQueryPromise(database, query, param) {
   return new Promise((resolve, reject) => {
-    db.run(query, param, function (error) {
+    database.run(query, param, function (error) {
       if (error) {
         reject(error);
       } else {
@@ -14,9 +10,9 @@ export function runSqlQueryPromise(query, param) {
   });
 }
 
-export function getDatabasePromise(query, param) {
+export function getDatabasePromise(database, query, param) {
   return new Promise((resolve, reject) => {
-    db.get(query, param, (error, record) => {
+    database.get(query, param, (error, record) => {
       if (error) {
         reject(error);
       } else {
@@ -26,9 +22,9 @@ export function getDatabasePromise(query, param) {
   });
 }
 
-export function allDatabasePromise(query, param) {
+export function allDatabasePromise(database, query, param) {
   return new Promise((resolve, reject) => {
-    db.all(query, param, (error, records) => {
+    database.all(query, param, (error, records) => {
       if (error) {
         reject(error);
       } else {
@@ -38,9 +34,9 @@ export function allDatabasePromise(query, param) {
   });
 }
 
-export function closeDatabasePromise() {
+export function closeDatabasePromise(database) {
   return new Promise((resolve, reject) => {
-    db.close((error) => {
+    database.close((error) => {
       if (error) {
         reject(error);
       } else {
