@@ -61,9 +61,7 @@ const createBooksTableWithError = () => {
     .catch((error) => {
       console.error(error.message);
     })
-    .then(() => {
-      runSqlQueryPromise(db, "DROP TABLE books");
-    })
+    .then(() => runSqlQueryPromise(db, "DROP TABLE books"))
     .finally(() => {
       closeDatabasePromise(db);
     });
