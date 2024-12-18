@@ -3,18 +3,18 @@
 import timers from "timers/promises";
 
 import {
-  runDatabasePromise,
+  runSqlQueryPromise,
   getDatabasePromise,
   allDatabasePromise,
   closeDatabasePromise,
 } from "./promisification-functions.js";
 
 const createBooksTableWithoutError = () => {
-  runDatabasePromise(
+  runSqlQueryPromise(
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   )
     .then(() => {
-      return runDatabasePromise(
+      return runSqlQueryPromise(
         "INSERT INTO books (title) VALUES (?)",
         "JavaScript Primer",
       );
@@ -33,7 +33,7 @@ const createBooksTableWithoutError = () => {
       console.log(record);
     })
     .finally(() => {
-      runDatabasePromise("DROP TABLE books");
+      runSqlQueryPromise("DROP TABLE books");
     });
 };
 createBooksTableWithoutError();
@@ -41,11 +41,11 @@ createBooksTableWithoutError();
 await timers.setTimeout(100);
 
 const createBooksTableWithError = () => {
-  runDatabasePromise(
+  runSqlQueryPromise(
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   )
     .then(() => {
-      return runDatabasePromise(
+      return runSqlQueryPromise(
         "INSERT INTO books (titlr) VALUES (?)",
         "JavaScript Primer",
       );
@@ -60,7 +60,7 @@ const createBooksTableWithError = () => {
       console.error(error.message);
     })
     .then(() => {
-      runDatabasePromise("DROP TABLE books");
+      runSqlQueryPromise("DROP TABLE books");
     })
     .finally(() => {
       closeDatabasePromise();

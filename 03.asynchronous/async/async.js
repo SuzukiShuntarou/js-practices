@@ -3,17 +3,17 @@
 import timers from "timers/promises";
 
 import {
-  runDatabasePromise,
+  runSqlQueryPromise,
   getDatabasePromise,
   allDatabasePromise,
   closeDatabasePromise,
 } from "../promise/promisification-functions.js";
 
 const createBooksTableWithoutError = async () => {
-  await runDatabasePromise(
+  await runSqlQueryPromise(
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   );
-  const result = await runDatabasePromise(
+  const result = await runSqlQueryPromise(
     "INSERT INTO books (title) VALUES (?)",
     "JavaScript Primer",
   );
@@ -23,7 +23,7 @@ const createBooksTableWithoutError = async () => {
     result.lastID,
   );
   console.log(record);
-  await runDatabasePromise("DROP TABLE books");
+  await runSqlQueryPromise("DROP TABLE books");
 };
 createBooksTableWithoutError();
 
@@ -38,11 +38,11 @@ const handleSqliteError = (error) => {
 };
 
 const createBooksTableWithError = async () => {
-  await runDatabasePromise(
+  await runSqlQueryPromise(
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   );
   try {
-    await runDatabasePromise(
+    await runSqlQueryPromise(
       "INSERT INTO books (titlr) VALUES (?)",
       "JavaScript Primer",
     );
@@ -55,7 +55,7 @@ const createBooksTableWithError = async () => {
     handleSqliteError(error);
   }
   try {
-    await runDatabasePromise("DROP TABLE books");
+    await runSqlQueryPromise("DROP TABLE books");
   } finally {
     await closeDatabasePromise();
   }
