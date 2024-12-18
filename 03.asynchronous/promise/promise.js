@@ -25,15 +25,12 @@ const createBooksTableWithoutError = () => {
     )
     .then((result) => {
       console.log(result.lastID);
-      return result.lastID;
-    })
-    .then((insertedId) =>
-      getDatabasePromise(
+      return getDatabasePromise(
         db,
         "SELECT title FROM books WHERE id = ?",
-        insertedId,
-      ),
-    )
+        result.lastID,
+      );
+    })
     .then((record) => {
       console.log(record);
     })
