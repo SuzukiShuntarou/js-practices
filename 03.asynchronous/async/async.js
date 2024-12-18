@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import timers from "timers/promises";
 import sqlite3 from "sqlite3";
 import {
   runSqlQueryPromise,
@@ -30,9 +29,7 @@ const createBooksTableWithoutError = async () => {
   console.log(record);
   await runSqlQueryPromise(db, "DROP TABLE books");
 };
-createBooksTableWithoutError();
-
-await timers.setTimeout(100);
+await createBooksTableWithoutError();
 
 const handleSqliteError = (error) => {
   if (error instanceof Error && error.code?.startsWith("SQLITE_")) {
@@ -67,4 +64,4 @@ const createBooksTableWithError = async () => {
     await closeDatabasePromise(db);
   }
 };
-createBooksTableWithError();
+await createBooksTableWithError();
