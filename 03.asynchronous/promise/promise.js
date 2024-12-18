@@ -16,24 +16,24 @@ const createBooksTableWithoutError = () => {
     db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   )
-    .then(() => {
-      return runSqlQueryPromise(
+    .then(() =>
+      runSqlQueryPromise(
         db,
         "INSERT INTO books (title) VALUES (?)",
         "JavaScript Primer",
-      );
-    })
+      ),
+    )
     .then((result) => {
       console.log(result.lastID);
       return result.lastID;
     })
-    .then((insertedId) => {
-      return getDatabasePromise(
+    .then((insertedId) =>
+      getDatabasePromise(
         db,
         "SELECT title FROM books WHERE id = ?",
         insertedId,
-      );
-    })
+      ),
+    )
     .then((record) => {
       console.log(record);
     })
@@ -50,19 +50,17 @@ const createBooksTableWithError = () => {
     db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
   )
-    .then(() => {
-      return runSqlQueryPromise(
+    .then(() =>
+      runSqlQueryPromise(
         db,
         "INSERT INTO books (titlr) VALUES (?)",
         "JavaScript Primer",
-      );
-    })
+      ),
+    )
     .catch((error) => {
       console.error(error.message);
     })
-    .then(() => {
-      return allDatabasePromise(db, "SELECT * FROM book");
-    })
+    .then(() => allDatabasePromise(db, "SELECT * FROM book"))
     .catch((error) => {
       console.error(error.message);
     })
