@@ -6,7 +6,7 @@ import {
   getDatabasePromise,
   allDatabasePromise,
   closeDatabasePromise,
-} from "../promise/promisification-functions.js";
+} from "./promisification-functions.js";
 
 const db = new sqlite3.Database(":memory:");
 
