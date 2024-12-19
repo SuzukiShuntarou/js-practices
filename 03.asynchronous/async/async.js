@@ -40,27 +40,27 @@ const handleSqliteError = (error) => {
 };
 
 const createBooksTableWithError = async () => {
-  await runSqlQueryPromise(
-    db,
-    "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
-  );
   try {
     await runSqlQueryPromise(
       db,
-      "INSERT INTO books (titlr) VALUES (?)",
-      "JavaScript Primer",
+      "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
     );
-  } catch (error) {
-    handleSqliteError(error);
-  }
-  try {
-    await allDatabasePromise(db, "SELECT * FROM book");
-  } catch (error) {
-    handleSqliteError(error);
-  }
-  try {
-    await runSqlQueryPromise(db, "DROP TABLE books");
+    try {
+      await runSqlQueryPromise(
+        db,
+        "INSERT INTO books (titlr) VALUES (?)",
+        "JavaScript Primer",
+      );
+    } catch (error) {
+      handleSqliteError(error);
+    }
+    try {
+      await allDatabasePromise(db, "SELECT * FROM book");
+    } catch (error) {
+      handleSqliteError(error);
+    }
   } finally {
+    await runSqlQueryPromise(db, "DROP TABLE books");
     await closeDatabasePromise(db);
   }
 };
