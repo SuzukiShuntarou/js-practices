@@ -11,7 +11,7 @@ import {
 
 const db = new sqlite3.Database(":memory:");
 
-const createBooksTableWithoutError = () => {
+const mainWithoutError = () => {
   runSqlQueryPromise(
     db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
@@ -38,11 +38,11 @@ const createBooksTableWithoutError = () => {
       runSqlQueryPromise(db, "DROP TABLE books");
     });
 };
-createBooksTableWithoutError();
+mainWithoutError();
 
 await timers.setTimeout(100);
 
-const createBooksTableWithError = () => {
+const mainWithError = () => {
   runSqlQueryPromise(
     db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
@@ -66,4 +66,4 @@ const createBooksTableWithError = () => {
       closeDatabasePromise(db);
     });
 };
-createBooksTableWithError();
+mainWithError();

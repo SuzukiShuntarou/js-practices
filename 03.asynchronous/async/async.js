@@ -10,7 +10,7 @@ import {
 
 const db = new sqlite3.Database(":memory:");
 
-const createBooksTableWithoutError = async () => {
+const mainWithoutError = async () => {
   await runSqlQueryPromise(
     db,
     "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
@@ -29,7 +29,7 @@ const createBooksTableWithoutError = async () => {
   console.log(record);
   await runSqlQueryPromise(db, "DROP TABLE books");
 };
-await createBooksTableWithoutError();
+await mainWithoutError();
 
 const handleSqliteError = (error) => {
   if (error instanceof Error && error.code?.startsWith("SQLITE_")) {
@@ -39,7 +39,7 @@ const handleSqliteError = (error) => {
   }
 };
 
-const createBooksTableWithError = async () => {
+const mainWithError = async () => {
   try {
     await runSqlQueryPromise(
       db,
@@ -64,4 +64,4 @@ const createBooksTableWithError = async () => {
     await closeDatabasePromise(db);
   }
 };
-await createBooksTableWithError();
+await mainWithError();
