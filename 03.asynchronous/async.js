@@ -8,8 +8,6 @@ import {
   closeDatabasePromise,
 } from "./promisification-functions.js";
 
-const db = new sqlite3.Database(":memory:");
-
 const mainWithoutError = async () => {
   await runSqlQueryPromise(
     db,
@@ -28,15 +26,6 @@ const mainWithoutError = async () => {
   );
   console.log(record);
   await runSqlQueryPromise(db, "DROP TABLE books");
-};
-await mainWithoutError();
-
-const handleSqliteError = (error) => {
-  if (error instanceof Error && error.code?.startsWith("SQLITE_")) {
-    console.error(error.message);
-  } else {
-    throw error;
-  }
 };
 
 const mainWithError = async () => {
@@ -64,4 +53,15 @@ const mainWithError = async () => {
     await closeDatabasePromise(db);
   }
 };
+
+const handleSqliteError = (error) => {
+  if (error instanceof Error && error.code?.startsWith("SQLITE_")) {
+    console.error(error.message);
+  } else {
+    throw error;
+  }
+};
+
+const db = new sqlite3.Database(":memory:");
+await mainWithoutError();
 await mainWithError();
