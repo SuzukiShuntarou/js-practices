@@ -9,8 +9,6 @@ import {
   closeDatabasePromise,
 } from "./promisification-functions.js";
 
-const db = new sqlite3.Database(":memory:");
-
 const mainWithoutError = () => {
   runSqlQueryPromise(
     db,
@@ -38,9 +36,6 @@ const mainWithoutError = () => {
       runSqlQueryPromise(db, "DROP TABLE books");
     });
 };
-mainWithoutError();
-
-await timers.setTimeout(100);
 
 const mainWithError = () => {
   runSqlQueryPromise(
@@ -66,4 +61,8 @@ const mainWithError = () => {
       closeDatabasePromise(db);
     });
 };
+
+const db = new sqlite3.Database(":memory:");
+mainWithoutError();
+await timers.setTimeout(100);
 mainWithError();
