@@ -57,9 +57,7 @@ const mainWithError = () => {
       console.error(error.message);
     })
     .then(() => runSqlQueryPromise(db, "DROP TABLE books"))
-    .finally(() => {
-      closeDatabasePromise(db);
-    });
+    .finally(() => closeDatabasePromise(db));
 };
 
 const db = new sqlite3.Database(":memory:");
