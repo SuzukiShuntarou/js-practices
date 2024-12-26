@@ -31,9 +31,7 @@ const mainWithoutError = () => {
     })
     .then((record) => {
       console.log(record);
-    })
-    .finally(() => {
-      runSqlQueryPromise(db, "DROP TABLE books");
+      return runSqlQueryPromise(db, "DROP TABLE books");
     });
 };
 
