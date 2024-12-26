@@ -28,6 +28,14 @@ const mainWithoutError = async () => {
   await runSqlQueryPromise(db, "DROP TABLE books");
 };
 
+const handleSqliteError = (error) => {
+  if (error instanceof Error && error.code?.startsWith("SQLITE_")) {
+    console.error(error.message);
+  } else {
+    throw error;
+  }
+};
+
 const mainWithError = async () => {
   try {
     await runSqlQueryPromise(
@@ -51,14 +59,6 @@ const mainWithError = async () => {
   } finally {
     await runSqlQueryPromise(db, "DROP TABLE books");
     await closeDatabasePromise(db);
-  }
-};
-
-const handleSqliteError = (error) => {
-  if (error instanceof Error && error.code?.startsWith("SQLITE_")) {
-    console.error(error.message);
-  } else {
-    throw error;
   }
 };
 
