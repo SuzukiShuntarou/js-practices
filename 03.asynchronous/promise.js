@@ -5,7 +5,7 @@ import sqlite3 from "sqlite3";
 import {
   runSqlQueryPromise,
   getRecordPromise,
-  allDatabasePromise,
+  searchRecordsPromise,
   closeDatabasePromise,
 } from "./promisification-functions.js";
 
@@ -52,7 +52,7 @@ const mainWithError = () => {
     .catch((error) => {
       console.error(error.message);
     })
-    .then(() => allDatabasePromise(db, "SELECT * FROM book"))
+    .then(() => searchRecordsPromise(db, "SELECT * FROM book"))
     .catch((error) => {
       console.error(error.message);
     })
