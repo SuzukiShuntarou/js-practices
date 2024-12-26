@@ -49,12 +49,12 @@ const mainWithError = () => {
     )
     .catch((error) => {
       console.error(error.message);
+      return searchRecordsPromise(db, "SELECT * FROM book");
     })
-    .then(() => searchRecordsPromise(db, "SELECT * FROM book"))
     .catch((error) => {
       console.error(error.message);
+      return runSqlQueryPromise(db, "DROP TABLE books");
     })
-    .then(() => runSqlQueryPromise(db, "DROP TABLE books"))
     .finally(() => closeDatabasePromise(db));
 };
 
