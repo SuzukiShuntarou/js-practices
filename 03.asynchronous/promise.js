@@ -4,7 +4,7 @@ import timers from "timers/promises";
 import sqlite3 from "sqlite3";
 import {
   runSqlQueryPromise,
-  getDatabasePromise,
+  getRecordPromise,
   allDatabasePromise,
   closeDatabasePromise,
 } from "./promisification-functions.js";
@@ -23,7 +23,7 @@ const mainWithoutError = () => {
     )
     .then((result) => {
       console.log(result.lastID);
-      return getDatabasePromise(
+      return getRecordPromise(
         db,
         "SELECT title FROM books WHERE id = ?",
         result.lastID,

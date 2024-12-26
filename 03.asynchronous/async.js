@@ -3,7 +3,7 @@
 import sqlite3 from "sqlite3";
 import {
   runSqlQueryPromise,
-  getDatabasePromise,
+  getRecordPromise,
   allDatabasePromise,
   closeDatabasePromise,
 } from "./promisification-functions.js";
@@ -19,7 +19,7 @@ const mainWithoutError = async () => {
     "JavaScript Primer",
   );
   console.log(result.lastID);
-  const record = await getDatabasePromise(
+  const record = await getRecordPromise(
     db,
     "SELECT title FROM books WHERE id = ?",
     result.lastID,

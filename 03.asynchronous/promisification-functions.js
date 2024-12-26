@@ -10,7 +10,7 @@ export function runSqlQueryPromise(database, query, param) {
   });
 }
 
-export function getDatabasePromise(database, query, param) {
+export function getRecordPromise(database, query, param) {
   return new Promise((resolve, reject) => {
     database.get(query, param, (error, record) => {
       if (error) {
