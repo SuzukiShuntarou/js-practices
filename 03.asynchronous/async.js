@@ -56,8 +56,8 @@ const mainWithError = async () => {
     } catch (error) {
       handleSqliteError(error);
     }
-  } finally {
     await runSqlQueryPromise(db, "DROP TABLE books");
+  } finally {
     await closeDatabasePromise(db);
   }
 };
