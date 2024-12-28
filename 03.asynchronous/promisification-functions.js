@@ -22,7 +22,7 @@ export function getRecordPromise(database, query, param) {
   });
 }
 
-export function searchRecordsPromise(database, query, param) {
+export function allRecordsPromise(database, query, param) {
   return new Promise((resolve, reject) => {
     database.all(query, param, (error, records) => {
       if (error) {
