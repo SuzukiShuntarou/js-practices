@@ -32,4 +32,4 @@ class Memo {
 
 const args = minimist(process.argv.slice(2));
 const memo = new Memo(args);
-memo.exec();
+await memo.exec();
