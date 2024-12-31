@@ -11,8 +11,8 @@ class Memo {
 
   async exec() {
     const cli = new CommandLineInterface();
-    await cli.build();
     try {
+      await cli.build();
       if (this.memoOptions.isList()) {
         await cli.showTitles();
       } else if (this.memoOptions.isRead()) {
