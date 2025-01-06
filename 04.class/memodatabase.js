@@ -16,9 +16,7 @@ class MemoDatabase {
     }
   }
 
-  async insertRecord(inputs) {
-    const title = inputs[0] === "" ? "NoTitle" : inputs[0];
-    const content = inputs.slice(1).join("\n");
+  async insertRecord(title, content) {
     try {
       await this.#runSqlQueryPromise(
         this.db,

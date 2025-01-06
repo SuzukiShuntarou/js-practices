@@ -17,7 +17,9 @@ class MemoCommandLineInterface {
 
   async createMemo() {
     const inputs = await this.#readInputs();
-    await this.db.insertRecord(inputs);
+    const title = inputs[0] === "" ? "NoTitle" : inputs[0];
+    const content = inputs.slice(1).join("\n");
+    await this.db.insertRecord(title, content);
   }
 
   #readInputs() {
