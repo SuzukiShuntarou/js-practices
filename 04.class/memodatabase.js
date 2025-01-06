@@ -37,7 +37,10 @@ class MemoDatabase {
 
   async loadMemos() {
     try {
-      return await allRecordsPromise(this.db, "SELECT * FROM memos");
+      return await allRecordsPromise(
+        this.db,
+        "SELECT * FROM memos ORDER BY id ASC",
+      );
     } catch (error) {
       console.error(error.message);
     }
