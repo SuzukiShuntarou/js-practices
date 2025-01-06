@@ -5,7 +5,7 @@ import {
   closeDatabasePromise,
 } from "./promisification-functions.js";
 
-class Database {
+class MemoDatabase {
   constructor() {
     this.db = new sqlite3.Database("memos.sqlite3");
   }
@@ -64,4 +64,4 @@ class Database {
   }
 }
 
-export default Database;
+export default MemoDatabase;

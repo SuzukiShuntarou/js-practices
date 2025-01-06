@@ -1,10 +1,10 @@
 import readline from "readline";
 import enquirer from "enquirer";
-import database from "./database.js";
+import MemoDatabase from "./memodatabase.js";
 
 class MemoCommandLineInterface {
   constructor() {
-    this.db = new database();
+    this.db = new MemoDatabase();
   }
 
   async build() {
