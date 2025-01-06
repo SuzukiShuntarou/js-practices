@@ -3,8 +3,8 @@ import enquirer from "enquirer";
 import MemoDatabase from "./memodatabase.js";
 
 class MemoCommandLineInterface {
-  constructor() {
-    this.db = new MemoDatabase();
+  constructor(databaseName) {
+    this.db = new MemoDatabase(databaseName);
   }
 
   async build() {

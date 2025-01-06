@@ -6,8 +6,8 @@ import {
 } from "./promisification-functions.js";
 
 class MemoDatabase {
-  constructor() {
-    this.db = new sqlite3.Database("memos.sqlite3");
+  constructor(name) {
+    this.db = new sqlite3.Database(name);
   }
 
   async createMemosTable() {

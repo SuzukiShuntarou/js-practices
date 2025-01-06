@@ -5,12 +5,13 @@ import MemoCommandLineInterface from "./memocommandlineinterface.js";
 import MemoOptions from "./memooptions.js";
 
 class Memo {
-  constructor(args) {
+  constructor(args, databaseName) {
     this.memoOptions = new MemoOptions(args);
+    this.databaseName = databaseName;
   }
 
   async exec() {
-    const cli = new MemoCommandLineInterface();
+    const cli = new MemoCommandLineInterface(this.databaseName);
     try {
       await cli.build();
       if (this.memoOptions.isList()) {
@@ -31,5 +32,6 @@ class Memo {
 }
 
 const args = minimist(process.argv.slice(2));
-const memo = new Memo(args);
+const databaseName = "memos.sqlite3";
+const memo = new Memo(args, databaseName);
 await memo.exec();
