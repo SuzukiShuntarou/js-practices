@@ -2,7 +2,7 @@ import readline from "readline";
 import enquirer from "enquirer";
 import database from "./database.js";
 
-class CommandLineInterface {
+class MemoCommandLineInterface {
   constructor() {
     this.db = new database();
   }
@@ -72,4 +72,4 @@ class CommandLineInterface {
   }
 }
 
-export default CommandLineInterface;
+export default MemoCommandLineInterface;

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import minimist from "minimist";
-import CommandLineInterface from "./commandlineinterface.js";
+import MemoCommandLineInterface from "./memocommandlineinterface.js";
 import MemoOptions from "./memooptions.js";
 
 class Memo {
@@ -10,7 +10,7 @@ class Memo {
   }
 
   async exec() {
-    const cli = new CommandLineInterface();
+    const cli = new MemoCommandLineInterface();
     try {
       await cli.build();
       if (this.memoOptions.isList()) {
