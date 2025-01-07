@@ -1,13 +1,40 @@
+#!/usr/bin/env node
+
+import minimist from "minimist";
 import readline from "readline";
 import enquirer from "enquirer";
 import MemoDatabase from "./memodatabase.js";
 
 class MemoCommandLineInterface {
-  constructor(databaseName) {
+  constructor(args, databaseName) {
+    this.memoOptions = {
+      list: args.l,
+      read: args.r,
+      delete: args.d,
+    };
     this.db = new MemoDatabase(databaseName);
   }
 
-  async build() {
+  async exec() {
+    try {
+      await this.#build();
+      if (this.memoOptions.list) {
+        await this.#showTitles();
+      } else if (this.memoOptions.read) {
+        await this.#showContent();
+      } else if (this.memoOptions.delete) {
+        await this.#deleteMemo();
+      } else {
+        await this.#createMemo();
+      }
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      await this.#close();
+    }
+  }
+
+  async #build() {
     await this.db.createMemosTable();
     this.reader = readline.createInterface({
       input: process.stdin,
@@ -15,7 +42,7 @@ class MemoCommandLineInterface {
     });
   }
 
-  async createMemo() {
+  async #createMemo() {
     const inputs = await this.#readInputs();
     const title = inputs[0] === "" ? "NoTitle" : inputs[0];
     const content = inputs.slice(1).join("\n");
@@ -37,12 +64,12 @@ class MemoCommandLineInterface {
     });
   }
 
-  async showTitles() {
+  async #showTitles() {
     const memos = await this.db.loadMemos();
     memos.forEach((memo) => console.log(memo.title));
   }
 
-  async showContent() {
+  async #showContent() {
     const memos = await this.db.loadMemos();
     await enquirer.prompt({
       type: "select",
@@ -54,7 +81,7 @@ class MemoCommandLineInterface {
     });
   }
 
-  async deleteMemo() {
+  async #deleteMemo() {
     const memos = await this.db.loadMemos();
     const response = await enquirer.prompt({
       type: "select",
@@ -68,10 +95,13 @@ class MemoCommandLineInterface {
     await this.db.deleteRecord(response.id);
   }
 
-  async close() {
+  async #close() {
     await this.db.close();
     this.reader.close();
   }
 }
 
-export default MemoCommandLineInterface;
+const args = minimist(process.argv.slice(2));
+const databaseName = "memos.sqlite3";
+const memocli = new MemoCommandLineInterface(args, databaseName);
+await memocli.exec();
