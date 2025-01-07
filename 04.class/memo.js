@@ -2,11 +2,14 @@
 
 import minimist from "minimist";
 import MemoCommandLineInterface from "./memocommandlineinterface.js";
-import MemoOptions from "./memooptions.js";
 
 class Memo {
   constructor(args, databaseName) {
-    this.memoOptions = new MemoOptions(args);
+    this.memoOptions = {
+      list: args.l,
+      read: args.r,
+      delete: args.d,
+    };
     this.databaseName = databaseName;
   }
 
@@ -14,11 +17,11 @@ class Memo {
     const cli = new MemoCommandLineInterface(this.databaseName);
     try {
       await cli.build();
-      if (this.memoOptions.isList()) {
+      if (this.memoOptions.list) {
         await cli.showTitles();
-      } else if (this.memoOptions.isRead()) {
+      } else if (this.memoOptions.read) {
         await cli.showContent();
-      } else if (this.memoOptions.isDelete()) {
+      } else if (this.memoOptions.delete) {
         await cli.deleteMemo();
       } else {
         await cli.createMemo();
